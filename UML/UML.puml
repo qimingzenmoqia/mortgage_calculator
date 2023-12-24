@@ -1,0 +1,45 @@
+@startuml
+class Loan {
+  loanType: LoanType
+  loanTerm: Integer
+  calculationMethod: CalculationMethod
+  loanAmount: BigDecimal
+  interestRateSelection: InterestRateSelection
+  loanInterest: BigDecimal
+  firstRepaymentDate: LocalDate
+}
+
+class CommercialLoan extends Loan {
+}
+
+class HousingProvidentFundLoan extends Loan {
+}
+
+class CombinedLoan extends Loan {
+  commercialLoanTerm: Integer
+  commercialLoanInterest: BigDecimal
+  commercialLoanAmount: BigDecimal
+  housingProvidentFundLoanTerm: Integer
+  housingProvidentFundLoanInterest: BigDecimal
+  housingProvidentFundLoanAmount: BigDecimal
+}
+
+interface CalculationModule {
+  monthlyRepayment: BigDecimal
+  totalRepayment: BigDecimal
+  interestTotal: BigDecimal
+  loanTotal: BigDecimal
+  loanTerm: Integer
+}
+
+Loan *-- CalculationModule
+
+CalculationModule --> DetailedViewModule
+
+class DetailedViewModule {
+  period: Integer
+  repaidPrincipal: BigDecimal
+  repaidInterest: BigDecimal
+  monthlyRepayment: BigDecimal
+}
+@enduml
